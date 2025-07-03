@@ -385,6 +385,8 @@ class HRAnalysisApp {
             </div>
         `;
         
+        this.displayUploadedImage();
+        
         document.getElementById('summary').textContent = analysis.summary;
         document.getElementById('details').innerHTML = analysis.details.replace(/\n/g, '<br>');
         document.getElementById('explanation').innerHTML = analysis.explanation.replace(/\n/g, '<br>');
@@ -394,6 +396,24 @@ class HRAnalysisApp {
         
         this.resultsSection.style.display = 'block';
         this.resultsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    displayUploadedImage() {
+        const imageElement = document.getElementById('uploadedImage');
+        const fileNameElement = document.getElementById('imageFileName');
+        const imageSizeElement = document.getElementById('imageSize');
+        
+        if (this.uploadedFile) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imageElement.src = e.target.result;
+                imageElement.style.display = 'block';
+            };
+            reader.readAsDataURL(this.uploadedFile);
+            
+            fileNameElement.textContent = `ファイル名: ${this.uploadedFile.name}`;
+            imageSizeElement.textContent = `サイズ: ${(this.uploadedFile.size / 1024 / 1024).toFixed(2)} MB`;
+        }
     }
     
     displayChart() {
