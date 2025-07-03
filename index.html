@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人材適性診断結果分析システム</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.0/dist/tesseract.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>人材適性診断結果分析システム</h1>
+            <p>グラフ画像をアップロードして企業の人材特性を分析します</p>
+        </header>
+
+        <div class="upload-section">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                <div class="upload-icon">📁</div>
+                <p>画像をドラッグ&ドロップまたはクリックしてアップロード</p>
+                <p class="file-info">PNG, JPG, JPEG形式対応</p>
+            </div>
+            <button id="analyzeBtn" class="analyze-btn" disabled>分析開始</button>
+        </div>
+
+        <div class="loading-section" id="loadingSection" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p>画像を解析中...</p>
+        </div>
+
+        <div class="results-section" id="resultsSection" style="display: none;">
+            <div class="company-info">
+                <h2>企業情報</h2>
+                <div id="companyDetails"></div>
+            </div>
+
+            <div class="analysis-results">
+                <div class="result-card">
+                    <h3>1. 診断結果の概要</h3>
+                    <div id="summary" class="result-content"></div>
+                </div>
+
+                <div class="result-card">
+                    <h3>2. 詳細説明</h3>
+                    <div id="details" class="result-content"></div>
+                </div>
+
+                <div class="result-card">
+                    <h3>3. 診断結果の詳細解説</h3>
+                    <div id="explanation" class="result-content"></div>
+                </div>
+
+                <div class="result-card highlight">
+                    <h3>4. 企業の特徴（一言で表現）</h3>
+                    <div id="characteristic" class="characteristic-text"></div>
+                </div>
+            </div>
+
+            <div class="data-visualization">
+                <h3>人材タイプ分布</h3>
+                <div id="chartContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="types.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
