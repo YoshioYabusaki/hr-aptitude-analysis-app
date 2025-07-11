@@ -103,11 +103,27 @@ class HRAnalysisApp {
         console.log('OCR結果:', ocrText);
         console.log('解析対象行:', lines);
         
+        // 新しいカテゴリー解析機能を使用
+        const categoryResult = parseCategories(ocrText);
+        
+        // カテゴリー解析結果を統合
+        if (categoryResult.companyName) {
+            data.companyName = categoryResult.companyName;
+        }
+        if (categoryResult.position) {
+            data.position = categoryResult.position;
+        }
+        if (categoryResult.departmentCategory) {
+            data.department = categoryResult.departmentCategory;
+        }
+        if (categoryResult.jobType) {
+            data.jobCategory = categoryResult.jobType;
+        }
+        
+        // デバッグ用：カテゴリー解析結果を出力
+        console.log('カテゴリー解析結果:', categoryResult);
+        
         for (const line of lines) {
-            if (line.includes('株式会社') && !data.companyName) {
-                data.companyName = line.trim();
-            }
-            
             // 従業員数の抽出を改善
             // 「200名」「200」「母数:200名」「該当数:200名」などのパターンに対応
             if (!data.totalEmployees) {
@@ -131,12 +147,6 @@ class HRAnalysisApp {
                         }
                     }
                 }
-            }
-            
-            if (line.includes('すべて') && line.includes('営業')) {
-                data.position = 'すべて';
-                data.department = '営業/マーケ';
-                data.jobCategory = '営業';
             }
             
             const typeMatch = line.match(/T(\d+).*?(\d+)/);
